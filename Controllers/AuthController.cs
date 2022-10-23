@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -15,15 +16,14 @@ using System.Text;
 
 namespace CompetitionApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("auth")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
-        private readonly IConfiguration _configuration;
-
-        public AuthController(IConfiguration configuration)
+        public AuthController(IConfiguration configuration, IHostEnvironment environment, IHttpContextAccessor httpContextAccessor)
+            : base(configuration, environment, httpContextAccessor)
         {
-            this._configuration = configuration;
+            //base
         }
 
         private string CreateToken(UserInfo model)

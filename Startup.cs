@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Mvc.HttpGet;
 
 namespace CompetitionApp
 {
@@ -33,21 +34,23 @@ namespace CompetitionApp
                             {
                                 options.TokenValidationParameters = new TokenValidationParameters
                                 {
-                        //what to validate
-                        ValidateIssuer = true,
+                                    //what to validate
+                                    ValidateIssuer = true,
                                     ValidateAudience = true,
                                     ValidateIssuerSigningKey = true,
-                        //setup validate data
-                        ValidIssuer = "smesk.in",
+                                    //setup validate data
+                                    ValidIssuer = "smesk.in",
                                     ValidAudience = "readers",
                                     IssuerSigningKey = symmetricSecurityKey
-                    };
+                                    //bu parametreler angularda config ve environment içine koyulacak.
+                                };
 
                                 options.Events = new JwtBearerEvents
                                 {
                                     OnTokenValidated = ctx =>
                                     {
-                            return Task.CompletedTask;
+                                        //Gerekirse burada gelen token içerisindeki çeşitli bilgilere göre doğrulama yapılabilir.
+                                        return Task.CompletedTask;
                                     },
                                     OnAuthenticationFailed = ctx =>
                                     {
@@ -82,11 +85,9 @@ namespace CompetitionApp
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CompetitionApp v1"));
             }
-            //app.UseCors();
-       
+
             app.UseCors("Cors");
             app.UseHttpsRedirection();
-            //app.UseSession();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
